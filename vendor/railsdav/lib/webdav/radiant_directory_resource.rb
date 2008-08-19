@@ -2,21 +2,12 @@
 # Released under the MIT License.  See the LICENSE file for more details.
 
 require 'find'
-class RadiantPageResource
+class RadiantDirectoryResource
   include WebDavResource
 
-   attr_accessor :html, :record, :table
+   attr_accessor :href, :record, :table
    
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
-   @@classes = Hash.new
-   
-    Find.find( File.join(RAILS_ROOT, 'app/models') ) do |model|
-          if File.extname(model) == ".rb" 
-            model = File.basename(model, ".rb")
-            kls = Inflector.classify( model )
-            @@classes[model] = Module::const_get( kls )
-          end
-     end
    
    def initialize(*args)
        obj = args.first
@@ -29,27 +20,21 @@ class RadiantPageResource
          @table = obj
        end
 
-       @href = "/#{@record.slug}.yaml"
+       @href = '/'
 
       # 
       # if args.last.is_a?(String)
       #     @href = args.last
       #     @href = @href + '/' if collection? and not @href.last == '/'
       #  end
-
-      
-    end
-
-    def href
-      record && record.url rescue "/"
     end
 
     def collection?
-      false
+      return true
     end
 
     def delete!
-      record.destroy! unless record.nil?
+      #record.destroy! unless record.nil?
     end
 
     def move! (dest_path, depth)
@@ -62,7 +47,7 @@ class RadiantPageResource
 
     # The children of a Radiant page are its child pages and/or parts
     def children
-     return []
+      Page.find(:all).map{|p| RadiantPageResource.new(p, "/#{record.slug}") }
     end
   
    def properties
@@ -70,9 +55,9 @@ class RadiantPageResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}.yaml" unless record.nil?
+      # return "#{record.slug.to_s}.yaml" unless record.nil?
       # return @@classes.index(table) unless table.nil?
-      # "/"
+      "/"
    end
    
    def creationdate
@@ -101,16 +86,16 @@ class RadiantPageResource
    end
       
    def getcontenttype
-      "text/html"
+      "httpd/unix-directory"
    end
       
    def getcontentlength 
       #respond_to?(:content) ? content.size : 0
-      YAML::dump( record ).to_s.size
+      0
    end
    
    def data
-     record.parts.select{|p| p.name =="body"}.first.content
+     nil
    end
    
 end

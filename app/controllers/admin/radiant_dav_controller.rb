@@ -12,6 +12,19 @@ class Admin::RadiantDavController < ApplicationController
   
   def write_content_to_path(path, content)
     puts "** RadiantDAV: write_content_to_path(#{path}, #{content})"
+    
+    page = Page.find_by_slug(path.split('/').last)
+    
+    if page
+      body_part = page.parts.find(:first, :conditions => {:name => "body"})
+      if body_part.update_attribute(:content, content)
+        
+      else
+        
+      end
+    else
+      
+    end
   end
   
   def copy_to_path(resource, dest_path, depth)
@@ -30,7 +43,7 @@ class Admin::RadiantDavController < ApplicationController
     #raise WebDavErrors::NotFoundError if path.any? {|component| component[0, 1] == "." }
 
     if path.blank? or path.eql?("/") 
-      return RadiantPageResource.new(Page.find(:first, :conditions => ['parent_id IS NULL']), href_for_path(path))
+      return RadiantDirectoryResource.new(Page.find(:first, :conditions => ['parent_id IS NULL']), href_for_path(path))
     else
       
       last = path.split('/')
