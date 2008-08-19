@@ -42,38 +42,28 @@ class Admin::RadiantDavController < ApplicationController
     # looking at you, OS X Finder!)
     #raise WebDavErrors::NotFoundError if path.any? {|component| component[0, 1] == "." }
 
-    if path.blank? or path.eql?("/") 
-      return RadiantDirectoryResource.new(href_for_path(path))
-    else
-      
-      last = path.split('/')
-      
-      if page = Page.find_by_slug(last)
-        puts page.inspect
-        return RadiantPageResource.new(page, href_for_path(path))
-      else
-        raise WebDavErrors::NotFoundError        
-      end
-      
-      puts "** FIND FOR: #{path.inspect}"
-    end
+    case path
+      when ''
+        return RadiantDirectoryResource.new('/')
+      when '/'
+        return RadiantDirectoryResource.new('/')
 
-    
-    # model, id = path.split('/')
-    # 
-    # unless model.nil?       
-    #   Page.find :first rescue raise WebDavErrors::NotFoundError
-    # end
-    #  
-    # if id.nil?
-    #   return RadiantPageResource.new(Page, href_for_path(path))
-    # else
-    #   if /(\w+)\.yaml$/ =~ id
-    #     return RadiantPageResource.new(Page.find_by_slug($1.to_i), href_for_path(path))
-    #   else
-    #     raise WebDavErrors::NotFoundError
-    #   end
-    # end
+      when '/Pages'
+        return RadiantDirectoryResource.new('/Pages', Page)
+
+      when '/Snippets'
+        return RadiantDirectoryResource.new('/Snippets', Snippet)
+
+      when '/Layouts'
+        return RadiantDirectoryResource.new('/Layouts', Layout)
+      else
+        if page = Page.find_by_slug(last)
+          puts page.inspect
+          return RadiantPageResource.new(page, href_for_path(path))
+        else
+          raise WebDavErrors::NotFoundError        
+        end        
+    end
   end
 
 end

@@ -2,7 +2,7 @@
 # Released under the MIT License.  See the LICENSE file for more details.
 
 require 'find'
-class RadiantPageResource
+class RadiantPagePartResource
   include WebDavResource
 
    attr_accessor :html, :record, :table

@@ -2,21 +2,13 @@
 # Released under the MIT License.  See the LICENSE file for more details.
 
 require 'find'
-class RadiantPageResource
+class RadiantLayoutResource
   include WebDavResource
 
    attr_accessor :html, :record, :table
    
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
    @@classes = Hash.new
-   
-    Find.find( File.join(RAILS_ROOT, 'app/models') ) do |model|
-          if File.extname(model) == ".rb" 
-            model = File.basename(model, ".rb")
-            kls = Inflector.classify( model )
-            @@classes[model] = Module::const_get( kls )
-          end
-     end
    
    def initialize(*args)
        obj = args.first
@@ -97,11 +89,11 @@ class RadiantPageResource
    end
       
    def getcontentlength 
-      YAML::dump( record ).to_s.size
+      record.content.size
    end
    
    def data
-     record.parts.select {|p| p.name == "body" }.first.content
+     record.content
    end
    
 end

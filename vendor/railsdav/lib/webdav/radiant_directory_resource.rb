@@ -10,7 +10,8 @@ class RadiantDirectoryResource
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
    
    def initialize(*args)
-       @href = '/'
+       @href = args.first
+       @table = args[1].to_s
     end
 
     def collection?
@@ -31,7 +32,16 @@ class RadiantDirectoryResource
 
     # The children of a Radiant page are its child pages and/or parts
     def children
-      Page.find(:all).map{|p| RadiantPageResource.new(p, "/#{p.slug}") }
+      case table
+        when 'Page'
+          Page.find(:all).map {|p| RadiantPageResource.new(p, "/Pages/#{p.slug}") }
+
+        when 'Snippet'
+          Snippet.find(:all).map {|p| RadiantSnippetResource.new(p, "/Snippets/#{p.slug}") }
+
+        when 'Layout'
+          Layout.find(:all).map {|p| RadiantLayoutResource.new(p, "/Layouts/#{p.slug}") }
+      end
     end
   
    def properties
@@ -39,7 +49,7 @@ class RadiantDirectoryResource
    end 
 
    def displayname
-      "/"
+      @href
    end
    
    def creationdate
