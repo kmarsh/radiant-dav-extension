@@ -5,7 +5,7 @@ require 'find'
 class RadiantPageResource
   include WebDavResource
 
-   attr_accessor :href, :record, :table
+   attr_accessor :record, :table
    
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
    @@classes = Hash.new
@@ -29,14 +29,22 @@ class RadiantPageResource
          @table = obj
        end
 
-       if args.last.is_a?(String)
-          @href = args.last
-          @href = @href + '/' if collection? and not @href.last == '/'
-       end
+
+      # 
+      # if args.last.is_a?(String)
+      #     @href = args.last
+      #     @href = @href + '/' if collection? and not @href.last == '/'
+      #  end
+
+      
+    end
+
+    def href
+      record && record.url rescue "/"
     end
 
     def collection?
-      record.children ? true : false
+      record.children || record.parts ? true : false
     end
 
     def delete!
@@ -56,7 +64,7 @@ class RadiantPageResource
      # return [] unless collection?
 
      if record && record.children
-       return record.children.map {|c| RadiantPageResource.new(c,"#{href}#{c.slug}") }
+       return record.children.map {|c| RadiantPageResource.new(c, "#{href}#{record.slug}" ) }
      else
        return []
      end
@@ -106,12 +114,12 @@ class RadiantPageResource
    end
       
    def getcontenttype
-      collection? ? "httpd/unix-directory" : "text/yaml"
+      collection? ? "httpd/unix-directory" : "text/html"
    end
       
    def getcontentlength 
       #respond_to?(:content) ? content.size : 0
-      record.to_yaml.to_s.size rescue 0 
+      0
    end
    
    def data
