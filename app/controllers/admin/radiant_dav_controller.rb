@@ -43,7 +43,7 @@ class Admin::RadiantDavController < ApplicationController
     #raise WebDavErrors::NotFoundError if path.any? {|component| component[0, 1] == "." }
 
     if path.blank? or path.eql?("/") 
-      return RadiantDirectoryResource.new(Page.find(:first, :conditions => ['parent_id IS NULL']), href_for_path(path))
+      return RadiantDirectoryResource.new(href_for_path(path))
     else
       
       last = path.split('/')

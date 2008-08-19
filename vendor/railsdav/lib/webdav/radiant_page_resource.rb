@@ -29,7 +29,7 @@ class RadiantPageResource
          @table = obj
        end
 
-       @href = "/#{@record.slug}.yaml"
+       @href = "/#{@record.slug}"
 
       # 
       # if args.last.is_a?(String)
@@ -70,7 +70,7 @@ class RadiantPageResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}.yaml" unless record.nil?
+      return "#{record.slug.to_s}" unless record.nil?
       # return @@classes.index(table) unless table.nil?
       # "/"
    end

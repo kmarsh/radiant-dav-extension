@@ -10,23 +10,7 @@ class RadiantDirectoryResource
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
    
    def initialize(*args)
-       obj = args.first
-       
-       #bit hackey but kind_of? ActiveRecord::Base isnt working
-       if obj.respond_to?(:save)
-         @record = obj
-       end
-       if obj.is_a?(Class)
-         @table = obj
-       end
-
        @href = '/'
-
-      # 
-      # if args.last.is_a?(String)
-      #     @href = args.last
-      #     @href = @href + '/' if collection? and not @href.last == '/'
-      #  end
     end
 
     def collection?
@@ -47,7 +31,7 @@ class RadiantDirectoryResource
 
     # The children of a Radiant page are its child pages and/or parts
     def children
-      Page.find(:all).map{|p| RadiantPageResource.new(p, "/#{record.slug}") }
+      Page.find(:all).map{|p| RadiantPageResource.new(p, "/#{p.slug}") }
     end
   
    def properties
@@ -55,8 +39,6 @@ class RadiantDirectoryResource
    end 
 
    def displayname
-      # return "#{record.slug.to_s}.yaml" unless record.nil?
-      # return @@classes.index(table) unless table.nil?
       "/"
    end
    
