@@ -36,7 +36,7 @@ class RadiantPageResource
     end
 
     def collection?
-      record.nil? ? true : false
+      record.children ? true : false
     end
 
     def delete!
@@ -51,22 +51,31 @@ class RadiantPageResource
       
     end
 
+    # The children of a Radiant page are its child pages and/or parts
     def children
-     return [] unless collection?
+     # return [] unless collection?
 
-     #If we have a table then return the children as all the records
-     return table.find( :all ).map { |o| RadiantPageResource.new(o,"#{href}#{o.id.to_s}.yaml") } unless table.nil?
-     
-     #The root case return the list of the tables
-     return @@classes.keys.sort.map { |o| RadiantPageResource.new(o,"#{href}#{o}") } if table.nil? and record.nil?
+     if record && record.children
+       return record.children.map {|c| RadiantPageResource.new(c,"#{href}#{c.slug}") }
+     else
+       return []
+     end
+
+
+     # #If we have a table then return the children as all the records
+     # 
+     # return table.find( :all ).map { |o| RadiantPageResource.new(o,"#{href}#{o.slug}.yaml") } unless table.nil?
+     # 
+     # #The root case return the list of the tables
+     # return @@classes.keys.sort.map { |o| RadiantPageResource.new(o,"#{href}#{o}") } if table.nil? and record.nil?
     end
   
    def properties
      WEBDAV_PROPERTIES
    end 
 
-   def displayname 
-      return "#{record.id.to_s}.yaml" unless record.nil?
+   def displayname
+      return "#{record.slug.to_s}.yaml" unless record.nil?
       return @@classes.index(table) unless table.nil?
       "/"
    end
@@ -102,7 +111,7 @@ class RadiantPageResource
       
    def getcontentlength 
       #respond_to?(:content) ? content.size : 0
-      0
+      record.to_yaml.to_s.size rescue 0 
    end
    
    def data
