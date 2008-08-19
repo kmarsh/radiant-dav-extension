@@ -1,6 +1,12 @@
 # Uncomment this if you reference any of your controllers in activate
 # require_dependency 'application'
-require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav.rb')
+# require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav/errors')
+# require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav/callbacks')
+# require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav/resource')
+# require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav/propxml')
+# require File.join(File.dirname(__FILE__), '/vendor/railsdav/lib/railsdav/act_as_railsdav')
+
+require File.join(File.dirname(__FILE__), '/vendor/railsdav/init.rb')
 
 class RadiantDavExtension < Radiant::Extension
   version "1.0"

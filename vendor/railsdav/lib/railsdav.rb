@@ -14,4 +14,4 @@ require 'railsdav/act_as_railsdav'
 
 require 'webdav/act_as_filewebdav'
 require 'webdav/file_resource'
-
+require 'webdav/active_record_resource'
