@@ -59,7 +59,6 @@ class ActiveRecordResource
      
      #The root case return the list of the tables
      return @@classes.keys.sort.map { |o| ActiveRecordResource.new(o,"#{href}#{o}") } if table.nil? and record.nil?
-
     end
   
    def properties
@@ -102,6 +101,7 @@ class ActiveRecordResource
    end
       
    def getcontentlength 
+      #respond_to?(:content) ? content.size : 0
       0
    end
    
