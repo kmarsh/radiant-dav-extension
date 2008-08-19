@@ -23,31 +23,29 @@ class Admin::RadiantDavController < ApplicationController
   end
 
   def get_resource_for_path(path)
-    puts "** RadiantDAV: get_resource_for_path(#{path})"
+    puts "** RadiantDAV: get_resource_for_path(#{path.inspect})"
 
-     return ActiveRecordResource.new(href_for_path(nil)) if path.blank? or path.eql?("/") 
-     model, id = path.split('/')
-     unless model.nil?
-       
-       Page.find :first rescue raise WebDavErrors::NotFoundError
-     end
+    # Save us the trouble if you're looking for anything that starts with . (I'm
+    # looking at you, OS X Finder!)
+    #raise WebDavErrors::NotFoundError if path.any? {|component| component[0, 1] == "." }
+
+    return RadiantPageResource.new(Page, href_for_path(path)) if path.blank? or path.eql?("/") 
+    
+    model, id = path.split('/')
+    
+    unless model.nil?       
+      Page.find :first rescue raise WebDavErrors::NotFoundError
+    end
      
-     if id.nil?
-       return ActiveRecordResource.new(Page, href_for_path(path))
-     else
-       if /(\w+)\.yaml$/ =~ id
-         return ActiveRecordResource.new(Page.find($1.to_i), href_for_path(path))
-       else
-         raise WebDavErrors::NotFoundError
-       end
-     end
-    # 
-    # 
-    # 
-    # o = Page.find(:first)
-    # href = "/"
-    # 
-    # return ActiveRecordResource.new(o,"#{href}#{o.id.to_s}.yaml")
+    if id.nil?
+      return RadiantPageResource.new(Page, href_for_path(path))
+    else
+      if /(\w+)\.yaml$/ =~ id
+        return RadiantPageResource.new(Page.find($1.to_i), href_for_path(path))
+      else
+        raise WebDavErrors::NotFoundError
+      end
+    end
   end
 
 end

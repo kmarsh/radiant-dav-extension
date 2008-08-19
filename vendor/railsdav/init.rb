@@ -4,6 +4,7 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib/')
 require 'railsdav'
 
 ActionController::ACCEPTED_HTTP_METHODS.add('propfind')
+ActionController::ACCEPTED_HTTP_METHODS.add('lock')
 
 ActionController::Base.send(:include, Railsdav)
 ActionController::Base.send(:include, Railsdav::ActAsFileWebDav)
