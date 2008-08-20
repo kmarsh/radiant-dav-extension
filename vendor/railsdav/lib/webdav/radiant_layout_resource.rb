@@ -1,14 +1,11 @@
-# Copyright (c) 2006 Stuart Eccles
-# Released under the MIT License.  See the LICENSE file for more details.
-
 require 'find'
 class RadiantLayoutResource
   include WebDavResource
 
-   attr_accessor :html, :record, :table
-   
-   WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
-   @@classes = Hash.new
+  attr_accessor :html, :record, :table
+
+  WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
+  @@classes = Hash.new
    
    def initialize(*args)
        obj = args.first

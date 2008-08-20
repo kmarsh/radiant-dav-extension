@@ -57,8 +57,8 @@ class Admin::RadiantDavController < ApplicationController
       when '/Layouts'
         return RadiantDirectoryResource.new('/Layouts', Layout)
       else
-        if page = Page.find_by_slug(last)
-          puts page.inspect
+        path_components = path.split('/')
+        if page = Page.find_by_slug(path_components.last)
           return RadiantPageResource.new(page, href_for_path(path))
         else
           raise WebDavErrors::NotFoundError        

@@ -1,93 +1,98 @@
-# Copyright (c) 2006 Stuart Eccles
-# Released under the MIT License.  See the LICENSE file for more details.
-
 require 'find'
+
 class RadiantDirectoryResource
   include WebDavResource
 
-   attr_accessor :href, :record, :table
-   
-   WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
-   
-   def initialize(*args)
-       @href = args.first
-       @table = args[1].to_s
-    end
+  attr_accessor :href, :record, :table
 
-    def collection?
-      return true
-    end
+  WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
 
-    def delete!
-      #record.destroy! unless record.nil?
-    end
+  def initialize(href, table = nil)
+    @href = href
+    @table = table
+    
+    puts @href, @table
+    
+  end
 
-    def move! (dest_path, depth)
+  def collection?
+    return true
+  end
+
+  def delete!
+    #record.destroy! unless record.nil?
+  end
+
+  def move! (dest_path, depth)
+
+  end
+
+  def copy! (dest_path, depth)
+
+  end
+
+  def children
+    case @href
+      when '/Pages/'
+        return Page.find(:all).map {|p| RadiantPageResource.new(p, "/Pages/#{p.slug}") }
+
+      when '/Snippets/'
+        return Snippet.find(:all).map {|s| RadiantSnippetResource.new(s, "/Snippets/#{p.name}") }
+
+      when '/Layouts/'
+        return Layout.find(:all).map {|l| RadiantLayoutResource.new(l, "/Layouts/#{p.name}") }
       
+      when '/'
+        return [
+          RadiantDirectoryResource.new('/Pages/', Page),
+          RadiantDirectoryResource.new('/Snippets/', Snippet),
+          RadiantDirectoryResource.new('/Layouts/', Layout)
+        ]
     end
+  end
 
-    def copy! (dest_path, depth)
-      
+  def properties
+    WEBDAV_PROPERTIES
+  end 
+
+  def displayname
+    @href
+  end
+   
+  def creationdate
+    if !record.nil? and record.respond_to? :created_at
+      record.created_at.httpdate
     end
+  end
 
-    # The children of a Radiant page are its child pages and/or parts
-    def children
-      case table
-        when 'Page'
-          Page.find(:all).map {|p| RadiantPageResource.new(p, "/Pages/#{p.slug}") }
-
-        when 'Snippet'
-          Snippet.find(:all).map {|p| RadiantSnippetResource.new(p, "/Snippets/#{p.slug}") }
-
-        when 'Layout'
-          Layout.find(:all).map {|p| RadiantLayoutResource.new(p, "/Layouts/#{p.slug}") }
-      end
+  def getlastmodified
+    if !record.nil? and record.respond_to? :updated_at
+      record.updated_at.httpdate
     end
-  
-   def properties
-     WEBDAV_PROPERTIES
-   end 
+  end
 
-   def displayname
-      @href
-   end
-   
-   def creationdate
-      if !record.nil? and record.respond_to? :created_at
-        record.created_at.httpdate
-      end
-   end
-   
-   def getlastmodified
-      if !record.nil? and record.respond_to? :updated_at
-        record.updated_at.httpdate
-      end
-   end
-   
-   def set_getlastmodified(value)
-     if !record.nil? and record.respond_to? :updated_at=
+  def set_getlastmodified(value)
+    if !record.nil? and record.respond_to? :updated_at=
       record.updated_at = Time.httpdate(value)
       gen_status(200, "OK").to_s
-     else
-        gen_status(409, "Conflict").to_s
-     end
-   end
+    else
+      gen_status(409, "Conflict").to_s
+    end
+  end
    
-   def getetag
-      #sprintf('%x-%x-%x', @st.ino, @st.size, @st.mtime.to_i) unless @file.nil?
-   end
-      
-   def getcontenttype
-      "httpd/unix-directory"
-   end
-      
-   def getcontentlength 
-      #respond_to?(:content) ? content.size : 0
-      0
-   end
-   
-   def data
-     nil
-   end
-   
+  def getetag
+    #sprintf('%x-%x-%x', @st.ino, @st.size, @st.mtime.to_i) unless @file.nil?
+  end
+
+  def getcontenttype
+    "httpd/unix-directory"
+  end
+
+  def getcontentlength 
+    0
+  end
+
+  def data
+    nil
+  end
 end

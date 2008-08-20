@@ -5,27 +5,17 @@ require 'find'
 class RadiantSnippetResource
   include WebDavResource
 
-   attr_accessor :html, :record, :table
+   attr_accessor :record, :table
    
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
    @@classes = Hash.new
    
    def initialize(*args)
-       obj = args.first
-       
-       #bit hackey but kind_of? ActiveRecord::Base isnt working
-       if obj.respond_to?(:save)
-         @record = obj
-       end
-       if obj.is_a?(Class)
-         @table = obj
-       end
-
-       @href = "/#{@record.slug}"      
+     @record = args[0]
     end
 
     def href
-      record && record.url rescue "/"
+      "/Snippets/#{record.name}"
     end
 
     def collection?
@@ -54,7 +44,7 @@ class RadiantSnippetResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}" unless record.nil?
+      return "#{record.name}" unless record.nil?
       # return @@classes.index(table) unless table.nil?
       # "/"
    end

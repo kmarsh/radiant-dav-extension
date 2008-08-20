@@ -37,7 +37,7 @@ class RadiantPageResource
     end
 
     def collection?
-      false
+      true
     end
 
     def delete!
@@ -97,7 +97,7 @@ class RadiantPageResource
    end
       
    def getcontentlength 
-      YAML::dump( record ).to_s.size
+      0
    end
    
    def data
