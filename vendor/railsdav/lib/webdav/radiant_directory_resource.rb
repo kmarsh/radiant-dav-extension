@@ -37,10 +37,10 @@ class RadiantDirectoryResource
         return Page.find(:all).map {|p| RadiantPageResource.new(p, "/Pages/#{p.slug}") }
 
       when '/Snippets/'
-        return Snippet.find(:all).map {|s| RadiantSnippetResource.new(s, "/Snippets/#{p.name}") }
+        return Snippet.find(:all).map {|s| RadiantSnippetResource.new(s, "/Snippets/#{s.name}") }
 
       when '/Layouts/'
-        return Layout.find(:all).map {|l| RadiantLayoutResource.new(l, "/Layouts/#{p.name}") }
+        return Layout.find(:all).map {|l| RadiantLayoutResource.new(l, "/Layouts/#{l.name}") }
       
       when '/'
         return [

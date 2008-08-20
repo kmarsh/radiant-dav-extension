@@ -48,14 +48,14 @@ class Admin::RadiantDavController < ApplicationController
       when '/'
         return RadiantDirectoryResource.new('/')
 
-      when '/Pages'
-        return RadiantDirectoryResource.new('/Pages', Page)
+      when '/Pages/'
+        return RadiantDirectoryResource.new('/Pages/', Page)
 
-      when '/Snippets'
-        return RadiantDirectoryResource.new('/Snippets', Snippet)
+      when '/Snippets/'
+        return RadiantDirectoryResource.new('/Snippets/', Snippet)
 
-      when '/Layouts'
-        return RadiantDirectoryResource.new('/Layouts', Layout)
+      when '/Layouts/'
+        return RadiantDirectoryResource.new('/Layouts/', Layout)
       else
         path_components = path.split('/')
         if page = Page.find_by_slug(path_components.last)

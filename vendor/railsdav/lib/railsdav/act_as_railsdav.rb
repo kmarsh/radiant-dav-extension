@@ -121,7 +121,8 @@ module Railsdav
         
         response.headers["Content-Type"] = 'text/xml; charset="utf-8"'
         
-        #render the Multistatus XML        
+        #render the Multistatus XML   
+        puts self.class.propfind_xml     
         render :inline => self.class.propfind_xml, :layout => false, :type => :rxml, :status => 207  and return
       end
   
@@ -152,6 +153,7 @@ module Railsdav
          response.headers["Content-Type"] = 'text/xml; charset="utf-8"'
          
          #render the Multistatus XML
+         puts self.class.proppatch_xml
          render :inline => self.class.proppatch_xml, :layout => false, :type => :rxml, :status => 207  and return
       end
   
