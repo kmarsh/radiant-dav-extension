@@ -1,88 +1,77 @@
-# Copyright (c) 2006 Stuart Eccles
-# Released under the MIT License.  See the LICENSE file for more details.
-
 class RadiantPagePartResource
   include WebDavResource
 
-   attr_accessor :html, :record, :table
-   
-   WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
-   
-   def initialize(*args)
-     @record = args[0]
-     @href = args[1]
-    end
+  attr_accessor :html, :record, :table, :href
 
-    def href
-      @href
-    end
+  WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
 
-    def collection?
-      false
-    end
+  def initialize(*args)
+    @record = args[0]
+    @href = args[1]
+  end
 
-    def delete!
-      record.destroy! unless record.nil?
-    end
+  def collection?
+    false
+  end
 
-    def move! (dest_path, depth)
-      
-    end
+  def delete!
+    record.destroy! unless record.nil?
+  end
 
-    def copy! (dest_path, depth)
-      
-    end
+  def move! (dest_path, depth)
 
-    # The children of a Radiant page are its child pages and/or parts
-    def children
-     return []
-    end
-  
-   def properties
-     WEBDAV_PROPERTIES
-   end 
+  end
 
-   def displayname
-      return "#{record.name.to_s}" unless record.nil?
-      # return @@classes.index(table) unless table.nil?
-      # "/"
-   end
-   
-   def creationdate
-      if !record.nil? and record.respond_to? :created_at
-        record.created_at.httpdate
-      end
-   end
-   
-   def getlastmodified
-      if !record.nil? and record.respond_to? :updated_at
-        record.updated_at.httpdate
-      end
-   end
-   
-   def set_getlastmodified(value)
-     if !record.nil? and record.respond_to? :updated_at=
+  def copy! (dest_path, depth)
+
+  end
+
+  # The children of a Radiant page are its child pages and/or parts
+  def children
+    return []
+  end
+
+  def properties
+    WEBDAV_PROPERTIES
+  end 
+
+  def displayname
+    return "#{record.name.to_s}" unless record.nil?
+  end
+
+  def creationdate
+    if !record.nil? and record.respond_to? :created_at
+      record.created_at.httpdate
+    end
+  end
+
+  def getlastmodified
+    if !record.nil? and record.respond_to? :updated_at
+      record.updated_at.httpdate
+    end
+  end
+
+  def set_getlastmodified(value)
+    if !record.nil? and record.respond_to? :updated_at=
       record.updated_at = Time.httpdate(value)
       gen_status(200, "OK").to_s
-     else
-        gen_status(409, "Conflict").to_s
-     end
-   end
-   
-   def getetag
-      #sprintf('%x-%x-%x', @st.ino, @st.size, @st.mtime.to_i) unless @file.nil?
-   end
-      
-   def getcontenttype
-      "text/html"
-   end
-      
-   def getcontentlength 
-      @record.content.size
-   end
-   
-   def data
-     @record.content
-   end
-   
+    else
+      gen_status(409, "Conflict").to_s
+    end
+  end
+
+  def getetag
+  end
+
+  def getcontenttype
+    "text/html"
+  end
+
+  def getcontentlength 
+    @record.content.size
+  end
+
+  def data
+    @record.content
+  end
 end

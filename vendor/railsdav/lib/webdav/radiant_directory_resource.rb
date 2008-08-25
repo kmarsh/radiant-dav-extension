@@ -8,9 +8,6 @@ class RadiantDirectoryResource
   def initialize(href, table = nil)
     @href = href
     @table = table
-    
-    puts @href, @table
-    
   end
 
   def collection?
