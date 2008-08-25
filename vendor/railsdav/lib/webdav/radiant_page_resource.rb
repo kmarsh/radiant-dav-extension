@@ -19,21 +19,12 @@ class RadiantPageResource
      end
    
    def initialize(*args)
-       obj = args.first
-       
-       #bit hackey but kind_of? ActiveRecord::Base isnt working
-       if obj.respond_to?(:save)
-         @record = obj
-       end
-       if obj.is_a?(Class)
-         @table = obj
-       end
-
-       @href = "/#{@record.slug}"      
+     @record = args[0]
+     @href = args[1]
     end
 
     def href
-      record && record.url rescue "/"
+      @href
     end
 
     def collection?
@@ -54,7 +45,7 @@ class RadiantPageResource
 
     # The children of a Radiant page are its child pages and/or parts
     def children
-     return []
+      return @record.parts.map {|pp| RadiantPagePartResource.new(pp, "Pages/#{@record.title}/#{pp.name}")}
     end
   
    def properties
@@ -62,7 +53,7 @@ class RadiantPageResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}" unless record.nil?
+      return @record.title
       # return @@classes.index(table) unless table.nil?
       # "/"
    end
@@ -93,7 +84,7 @@ class RadiantPageResource
    end
       
    def getcontenttype
-      "text/html"
+      "httpd/unix-directory"
    end
       
    def getcontentlength 
@@ -101,7 +92,7 @@ class RadiantPageResource
    end
    
    def data
-     record.parts.select {|p| p.name == "body" }.first.content
+     nil
    end
    
 end

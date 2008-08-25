@@ -8,21 +8,12 @@ class RadiantLayoutResource
   @@classes = Hash.new
    
    def initialize(*args)
-       obj = args.first
-       
-       #bit hackey but kind_of? ActiveRecord::Base isnt working
-       if obj.respond_to?(:save)
-         @record = obj
-       end
-       if obj.is_a?(Class)
-         @table = obj
-       end
-
-       @href = "/#{@record.slug}"      
+       @record = args[0]
+       @href = args[1]
     end
 
     def href
-      record && record.url rescue "/"
+      @href
     end
 
     def collection?
@@ -51,7 +42,7 @@ class RadiantLayoutResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}" unless record.nil?
+      return @record.name
       # return @@classes.index(table) unless table.nil?
       # "/"
    end

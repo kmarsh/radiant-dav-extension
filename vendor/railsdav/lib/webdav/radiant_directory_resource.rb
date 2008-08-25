@@ -1,5 +1,3 @@
-require 'find'
-
 class RadiantDirectoryResource
   include WebDavResource
 
@@ -33,20 +31,20 @@ class RadiantDirectoryResource
 
   def children
     case @href
-      when '/Pages/'
-        return Page.find(:all).map {|p| RadiantPageResource.new(p, "/Pages/#{p.slug}") }
+      when 'Pages'
+        return Page.find(:all).map {|p| RadiantPageResource.new(p, "Pages/#{p.title}") }
 
-      when '/Snippets/'
-        return Snippet.find(:all).map {|s| RadiantSnippetResource.new(s, "/Snippets/#{s.name}") }
+      when 'Snippets'
+        return Snippet.find(:all).map {|s| RadiantSnippetResource.new(s, "Snippets/#{s.name}") }
 
-      when '/Layouts/'
-        return Layout.find(:all).map {|l| RadiantLayoutResource.new(l, "/Layouts/#{l.name}") }
+      when 'Layouts'
+        return Layout.find(:all).map {|l| RadiantLayoutResource.new(l, "Layouts/#{l.name}") }
       
-      when '/'
+      when ''
         return [
-          RadiantDirectoryResource.new('/Pages/', Page),
-          RadiantDirectoryResource.new('/Snippets/', Snippet),
-          RadiantDirectoryResource.new('/Layouts/', Layout)
+          RadiantDirectoryResource.new('Pages', Page),
+          RadiantDirectoryResource.new('Snippets', Snippet),
+          RadiantDirectoryResource.new('Layouts', Layout)
         ]
     end
   end

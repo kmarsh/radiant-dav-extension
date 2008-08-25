@@ -15,7 +15,7 @@ class RadiantSnippetResource
     end
 
     def href
-      "/Snippets/#{record.name}"
+      "Snippets/#{record.name}"
     end
 
     def collection?

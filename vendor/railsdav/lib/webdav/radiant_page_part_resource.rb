@@ -1,39 +1,20 @@
 # Copyright (c) 2006 Stuart Eccles
 # Released under the MIT License.  See the LICENSE file for more details.
 
-require 'find'
 class RadiantPagePartResource
   include WebDavResource
 
    attr_accessor :html, :record, :table
    
    WEBDAV_PROPERTIES = [:displayname, :creationdate, :getlastmodified, :getcontenttype, :getcontentlength]
-   @@classes = Hash.new
-   
-    Find.find( File.join(RAILS_ROOT, 'app/models') ) do |model|
-          if File.extname(model) == ".rb" 
-            model = File.basename(model, ".rb")
-            kls = Inflector.classify( model )
-            @@classes[model] = Module::const_get( kls )
-          end
-     end
    
    def initialize(*args)
-       obj = args.first
-       
-       #bit hackey but kind_of? ActiveRecord::Base isnt working
-       if obj.respond_to?(:save)
-         @record = obj
-       end
-       if obj.is_a?(Class)
-         @table = obj
-       end
-
-       @href = "/#{@record.slug}"      
+     @record = args[0]
+     @href = args[1]
     end
 
     def href
-      record && record.url rescue "/"
+      @href
     end
 
     def collection?
@@ -62,7 +43,7 @@ class RadiantPagePartResource
    end 
 
    def displayname
-      return "#{record.slug.to_s}" unless record.nil?
+      return "#{record.name.to_s}" unless record.nil?
       # return @@classes.index(table) unless table.nil?
       # "/"
    end
@@ -97,11 +78,11 @@ class RadiantPagePartResource
    end
       
    def getcontentlength 
-      YAML::dump( record ).to_s.size
+      @record.content.size
    end
    
    def data
-     record.parts.select {|p| p.name == "body" }.first.content
+     @record.content
    end
    
 end
