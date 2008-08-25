@@ -16,15 +16,21 @@ class Admin::RadiantDavController < ApplicationController
     case path
       # Page Part
       when /^Pages\/(.+)\/(.+)$/
-        page = Page.find_by_title($1)
-        if page          
-          page_part = page.parts.find_by_name($2)
-        
-          if page_part.update_attribute(:content, content)
-          
-          else
-          
+
+        if p = Page.find_by_title($1)          
+          if pp = p.parts.find_by_name($2)
+            pp.update_attribute(:content, content)
           end
+        end
+        
+      when /^Snippets\/(.+)$/
+        if s = Snippet.find_by_name($1)
+          s.update_attribute(:content, content)
+        end
+        
+      when /^Layouts\/(.+)$/
+        if l = Layout.find_by_name($1)
+          l.update_attribute(:content, content)
         end
     end    
   end
