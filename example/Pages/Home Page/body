@@ -1,9 +1,0 @@
-<r:find url="/articles/">
-<r:children:each limit="5" order="desc">
-<div class="entry">
-  <h3><r:link /> <small><r:author /></small></h3>
-  <r:content />
-  <r:if_content part="extended"><r:link anchor="extended">Continue Reading&#8230;</r:link></r:if_content>
-</div>
-</r:children:each>
-</r:find>
