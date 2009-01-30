@@ -1,4 +1,4 @@
-class Admin::RadiantDavController < ApplicationController
+class Admin::DavController < ApplicationController
   act_as_railsdav
   no_login_required
   
@@ -12,7 +12,12 @@ class Admin::RadiantDavController < ApplicationController
   
   def write_content_to_path(path, content)
     puts "** RadiantDAV: write_content_to_path(#{path}, #{content})"
-    
+
+    # Ignore apple specific files
+    raise WebDavErrors::UnSupportedTypeError if path.any? do |component|
+      component.starts_with?('.') || component == 'mach_kernel' || component == 'Backups.backupdb'
+    end
+
     case path
       # Page Part
       when /^Pages\/(.+)\/(.+)$/
@@ -46,9 +51,10 @@ class Admin::RadiantDavController < ApplicationController
   def get_resource_for_path(path)
     puts "** RadiantDAV: get_resource_for_path(#{path.inspect})"
 
-    # Save us the trouble if you're looking for anything that starts with . (I'm
-    # looking at you, OS X Finder!)
-    #raise WebDavErrors::NotFoundError if path.any? {|component| component[0, 1] == "." }
+    # Ignore apple specific files
+    raise WebDavErrors::NotFoundError if path.any? do |component|
+      component.starts_with?('.') || component == 'mach_kernel' || component == 'Backups.backupdb'
+    end
 
     case path
       when ''
