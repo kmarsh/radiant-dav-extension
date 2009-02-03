@@ -9,18 +9,8 @@ class RadiantSnippetResource < RadiantFileResource
   #
   def initialize(record)
     @record = record
-    @path = record.name + filter_extension
-  end
+    @path = "snippets/#{record.name}#{filter_extension}"
 
-  #
-  # Returns the url of this resource
-  #
-  def href
-    "/admin/dav/snippets/#{path}"
-  end
-  
-  def extension
-    filter_extension
   end
 
   def getcontenttype

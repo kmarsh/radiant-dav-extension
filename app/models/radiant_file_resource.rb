@@ -20,13 +20,6 @@ class RadiantFileResource < RadiantResource
   end
 
   #
-  # Default file extension
-  #
-  def extension
-    ""
-  end
-
-  #
   # Default content type
   #
   def getcontenttype

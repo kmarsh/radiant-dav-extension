@@ -11,14 +11,14 @@ class RadiantDirectoryResource < RadiantResource
   #
   def initialize(path, &children)
     @path = path
-    @select_children = children
+    @children = children.call
   end
 
   #
   # children fot this directory
   #
   def children
-    @children = @select_children.call
+    @children
   end
 
 end

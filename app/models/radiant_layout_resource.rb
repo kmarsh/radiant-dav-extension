@@ -9,18 +9,7 @@ class RadiantLayoutResource < RadiantFileResource
   #
   def initialize(record)
     @record = record
-    @path = record.name + extension
-  end
-
-  #
-  # Returns the url of this resource
-  #
-  def href
-    "/admin/dav/snippets/#{path}"
-  end
-
-  def extension
-    ".html"
+    @path = "layouts/#{record.name}.html"
   end
 
   def getcontenttype
