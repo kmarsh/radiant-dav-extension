@@ -6,7 +6,7 @@ class RadiantRootResource < RadiantResource
 
   #
   # Prepare the WebDav root. This depends on the radiant installation and also
-  # on the user persmission
+  # on the user permission
   # +user+ the logged in user
   #
   def prepare(user)
