@@ -147,9 +147,7 @@ class RadiantResource
   end
 
   #
-  # Determine the URL of this resource
-  #
-  # Returns a url
+  # Returns the url of this resource
   #
   def href
     "/admin/dav/#{path}"
