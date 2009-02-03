@@ -13,11 +13,11 @@ class RadiantRootResource < RadiantResource
 
     @children << RadiantDirectoryResource.new('snippets') do
       Snippet.find(:all).map {|s| RadiantSnippetResource.new(s) }
-    end if user.admin?
+    end if user.developer? || user.admin?
     
     @children << RadiantDirectoryResource.new('layouts') do
       Layout.find(:all).map {|l| RadiantLayoutResource.new(l) }
-    end if user.admin?
+    end if user.developer? || user.admin?
 
     #@children << RadiantPageResource.new('pages')
   end
