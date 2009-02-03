@@ -1,7 +1,7 @@
 #
 # Stylesheet
 #
-class RadiantStylesheetResource < RadiantFileResource
+class Sns::RadiantStylesheetResource < RadiantFileResource
 
   #
   # Initialize a file resource

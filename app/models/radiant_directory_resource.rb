@@ -2,7 +2,7 @@
 # A radiant resource that will be represent by a
 # WebDav directory
 #
-class RadiantDirectoryResource < RadiantResource
+class RadiantDirectoryResource < RadiantBaseResource
 
   #
   # Initialize the WebDav directory

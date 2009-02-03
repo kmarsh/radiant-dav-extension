@@ -1,13 +1,13 @@
 #
-# Pages
+# Snippets
 #
-class RadiantPageResource < RadiantDirectoryResource
+class Radiant::RadiantSnippetResource < RadiantFileResource
 
   #
   # Initialize a file resource
   # +record+ ActiveRecord model
   #
-  def initialize(name, url)
+  def initialize(record)
     @record = record
     @path = "snippets/#{record.name}#{filter_extension}"
 

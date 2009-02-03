@@ -1,7 +1,7 @@
 #
 # Javascripts
 #
-class RadiantJavascriptResource < RadiantFileResource
+class Sns::RadiantJavascriptResource < RadiantFileResource
 
   #
   # Initialize a file resource

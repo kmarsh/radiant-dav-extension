@@ -1,7 +1,7 @@
 #
-# Snippets
+# Layouts
 #
-class RadiantSnippetResource < RadiantFileResource
+class Radiant::RadiantLayoutResource < RadiantFileResource
 
   #
   # Initialize a file resource
@@ -9,11 +9,11 @@ class RadiantSnippetResource < RadiantFileResource
   #
   def initialize(record)
     @record = record
-    @path = "snippets/#{record.name}#{filter_extension}"
-
+    @path = "layouts/#{record.name}.html"
   end
 
   def getcontenttype
-    filter_content_type
+    "text/html"
   end
+
 end

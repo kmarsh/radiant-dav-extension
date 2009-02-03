@@ -1,7 +1,7 @@
 #
 # Base class for all resources that will be seen as a file
 #
-class RadiantFileResource < RadiantResource
+class RadiantFileResource < RadiantBaseResource
 
   #
   # Initialize a file resource
