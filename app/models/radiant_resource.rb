@@ -24,7 +24,7 @@ class RadiantResource
   # Has this resource any childrens
   #
   def collection?
-    return true
+    true
   end
 
   #
@@ -162,7 +162,7 @@ class RadiantResource
   #
   def filter_extension
     case record.filter_id
-      when '', 'WymEditor'
+      when nil, '', 'WymEditor'
         return ".html"
       when 'Textile'
         return ".textile"
