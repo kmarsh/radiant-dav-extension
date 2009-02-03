@@ -9,7 +9,7 @@ class RadiantFileResource < RadiantResource
   #
   def initialize(record)
     @record = record
-    @path = record.name + filter_extension
+    @path = record.name
   end
 
   #
@@ -31,6 +31,13 @@ class RadiantFileResource < RadiantResource
   #
   def getcontenttype
     "text/plain"
+  end
+
+  #
+  # Has this resource any childrens
+  #
+  def collection?
+    false
   end
 
   #
