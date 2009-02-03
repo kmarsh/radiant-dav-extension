@@ -14,6 +14,12 @@ class Admin::DavController < ApplicationController
   # +path+ the requested path
   #
   def get_resource_for_path(path)
+
+    # Ignore apple specific files
+    raise WebDavErrors::UnSupportedTypeError if path.any? do |component|
+      component.starts_with?('.') || component == 'mach_kernel' || component == 'Backups.backupdb'
+    end
+    
     logger.debug "Radiant WebDAV: get_resource_for_path(#{path.inspect})"
     @root.get_resource(path)
   end
