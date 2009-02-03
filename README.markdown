@@ -21,6 +21,12 @@ It depends on your Radiant privileges what content will be exposed:
 
 * Snippets
 * Layouts
+* Javascripts
+* Stylesheets
+
+Javascripts and stylesheets will only be displayed, if the
+[SnS Extension](http://github.com/SwankInnovations/radiant-sns-extension/tree/master)
+is installed.
 
 File extensions
 ---------------
