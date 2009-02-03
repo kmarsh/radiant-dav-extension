@@ -42,7 +42,8 @@ of unneeded requests](http://code.google.com/p/sabredav/wiki/Finder). Use
 Acknowledge
 -----------
 
-This extension uses the excellent railsdav Rails plugin from Stuart Eccles.
+This extension uses the excellent [railsdav](http://github.com/stueccles/railsdav/tree/master)
+Rails plugin from Stuart Eccles.
 
 Dependencies
 ------------
@@ -55,7 +56,7 @@ This extension needs the following gems installed:
 Authors
 -------
 
-* Kevin Marsh
+* [Kevin Marsh](http://kevinmarsh.com)
 * [Michael Kessler](http://blog.netzpiraten.ch)
 
 Sponsors
