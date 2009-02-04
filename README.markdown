@@ -65,6 +65,8 @@ Some tasks sill needs to be done:
 * Move a resource
 * Make a collection
 
+For development I suggest the [RESTClient](https://addons.mozilla.org/de/firefox/addon/9780) Firefox-Addo, which allows to send WebDav request and analyze the response.
+
 Authors
 -------
 
