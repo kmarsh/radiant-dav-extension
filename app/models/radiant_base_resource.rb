@@ -18,6 +18,7 @@ class RadiantBaseResource
     @path = path
     @record = record
     @children = []
+    @prepared = false
   end
 
   #
@@ -192,32 +193,35 @@ class RadiantBaseResource
   #
   def prepare(user)
 
-    # Pages
+    if not @prepared
+      # Pages
 
-    @children << Radiant::RadiantPageResource.new('pages', Page.find_by_url('/'))
-    
-    # Snippets
+      @children << Radiant::RadiantPageResource.new('pages', Page.find_by_url('/'))
 
-    @children << RadiantDirectoryResource.new('snippets') do
-      Snippet.find(:all).map {|s| Radiant::RadiantSnippetResource.new(s) }
-    end if user.developer? || user.admin?
+      # Snippets
 
-    # Layouts
-
-    @children << RadiantDirectoryResource.new('layouts') do
-      Layout.find(:all).map {|l| Radiant::RadiantLayoutResource.new(l) }
-    end if user.developer? || user.admin?
-
-    # SnS Extension
-
-    if Object.const_defined?(:SnsExtension)
-      @children << RadiantDirectoryResource.new('javascripts') do
-        Javascript.find(:all).map {|l| Sns::RadiantJavascriptResource.new(l) }
+      @children << RadiantDirectoryResource.new('snippets') do
+        Snippet.find(:all).map {|s| Radiant::RadiantSnippetResource.new(s) }
       end if user.developer? || user.admin?
-      @children << RadiantDirectoryResource.new('stylesheets') do
-        Stylesheet.find(:all).map {|l| Sns::RadiantStylesheetResource.new(l) }
+
+      # Layouts
+
+      @children << RadiantDirectoryResource.new('layouts') do
+        Layout.find(:all).map {|l| Radiant::RadiantLayoutResource.new(l) }
       end if user.developer? || user.admin?
+
+      # SnS Extension
+
+      if Object.const_defined?(:SnsExtension)
+        @children << RadiantDirectoryResource.new('javascripts') do
+          Javascript.find(:all).map {|l| Sns::RadiantJavascriptResource.new(l) }
+        end if user.developer? || user.admin?
+        @children << RadiantDirectoryResource.new('stylesheets') do
+          Stylesheet.find(:all).map {|l| Sns::RadiantStylesheetResource.new(l) }
+        end if user.developer? || user.admin?
+      end
+
+      @prepared = true
     end
-
   end
 end

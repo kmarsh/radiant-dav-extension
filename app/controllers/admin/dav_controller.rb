@@ -35,7 +35,7 @@ class Admin::DavController < ApplicationController
   # Initializes the resource tree
   #
   def prepare_root_resource
-    @root = RadiantBaseResource.new('')
+    @root ||= RadiantBaseResource.new('')
     @root.prepare(session[:user])
   end
 
