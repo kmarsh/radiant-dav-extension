@@ -69,3 +69,9 @@ Sponsors
 --------
 
 Some work has been kindly sponsored by [ScreenConcept](http://www.screenconcept.ch).
+
+License
+-------
+
+This extension is released under the MIT license, see the LICENSE file for more
+information.
