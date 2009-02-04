@@ -29,9 +29,17 @@ class RadiantBaseResource
   end
 
   #
+  # Writes new content the resource
+  #
+  def write!(content)
+    raise WebDavErrors::ForbiddenError
+  end
+
+  #
   # Remove the resource
   #
   def delete!
+    raise WebDavErrors::ForbiddenError
   end
 
   #
@@ -39,7 +47,8 @@ class RadiantBaseResource
   # +dest_path+ the destination of the resource
   # +depth+ depth
   #
-  def move! (dest_path, depth)
+  def move!(dest_path, depth)
+    raise WebDavErrors::ForbiddenError
   end
 
   #
@@ -47,7 +56,8 @@ class RadiantBaseResource
   # +dest_path+ the destination of the resource
   # +depth+ depth
   #
-  def copy! (dest_path, depth)
+  def copy!(dest_path, depth)
+    raise WebDavErrors::TODO409Error
   end
 
   #

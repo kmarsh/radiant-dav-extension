@@ -47,4 +47,11 @@ class RadiantFileResource < RadiantBaseResource
     record.content
   end
 
+  #
+  # Write new content to the file
+  #
+  def write!(content)
+    record.content = content
+    record.save
+  end
 end
