@@ -43,24 +43,6 @@ class RadiantBaseResource
   end
 
   #
-  # Move the resource
-  # +dest_path+ the destination of the resource
-  # +depth+ depth
-  #
-  def move!(dest_path, depth)
-    raise WebDavErrors::ForbiddenError
-  end
-
-  #
-  # Copy the resource
-  # +dest_path+ the destination of the resource
-  # +depth+ depth
-  #
-  def copy!(dest_path, depth)
-    raise WebDavErrors::TODO409Error
-  end
-
-  #
   # Returns the children of the resource
   #
   def children

@@ -9,9 +9,14 @@ class Admin::DavController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :radiant_authentication, :prepare_root_resource
 
-   def mkcol_for_path(path)
-     raise WebDavErrors::ForbiddenError
-   end
+  #
+  # Make a new collection
+  # +path+ the path to create the collection
+  #
+  def mkcol_for_path(path)
+    logger.debug "Radiant WebDAV: mkcol_for_path(#{path})"
+    raise WebDavErrors::ForbiddenError
+  end
 
   #
   # Write content to a resource
@@ -29,11 +34,23 @@ class Admin::DavController < ApplicationController
     @root.get_resource(path).write!(content);
   end
 
+  #
+  # Copy a resource
+  # +resource+ the resource to copy
+  # +dest_path+ the destination path
+  # +depth+ depth of the coperation, just ignore and assume as infinite
+  #
   def copy_to_path(resource, dest_path, depth)
     logger.debug "Radiant WebDAV: copy_to_path(#{resource}, #{dest_path}, #{depth})"
     raise WebDavErrors::TODO409Error
   end
 
+  #
+  # Move a resource
+  # +resource+ the resource to copy
+  # +dest_path+ the destination path
+  # +depth+ depth of the coperation, just ignore and assume as infinite
+  #
   def move_to_path(resource, dest_path, depth)
     logger.debug "Radiant WebDAV: move_to_path(#{resource}, #{dest_path}, #{depth})"
     raise WebDavErrors::TODO409Error
