@@ -60,6 +60,7 @@ Todo
 ----
 
 Some tasks sill needs to be done:
+
 * Copy a resource
 * Move a resource
 * Make a collection
