@@ -5,6 +5,14 @@ This extension allows you to access some Radiant content by pointing your WebDav
 client to `/admin/dav`. You'll have to authenticate yourself before access will
 be granted.
 
+Dependencies
+------------
+
+This extension needs the following gems installed:
+
+* unicode
+* mime-types
+
 Privileges
 ----------
 
@@ -21,10 +29,6 @@ It depends on your Radiant privileges what content will be exposed:
 * Javascripts
 * Stylesheets
 
-Javascripts and stylesheets will only be displayed, if the
-[SnS Extension](http://github.com/SwankInnovations/radiant-sns-extension/tree/master)
-is installed.
-
 File extensions
 ---------------
 
@@ -34,6 +38,32 @@ to the name:
 * .html for WymEditor filter or if no filter is selected
 * .markdown for Markdown filter
 * .textile for Textile filter
+
+Radiant extensions
+------------------
+
+The Dav extension incorporates with the following Radiant extensions:
+
+### [Styles 'n Scripts](http://github.com/SwankInnovations/radiant-sns-extension/tree/master)
+
+If the Styles 'n Scripts extension is installed, the javascripts and stylesheets 
+will also be accessible.
+
+### [Language Redirect](http://github.com/intinig/radiant_language_redirect_extension/tree/master)
+
+If a page type is set to LanguageRedirect, the configuration will be parsed and
+each language goes into its own language folder.
+
+Todo
+----
+
+Some tasks sill needs to be done:
+
+* Copy a resource
+* Move a resource
+* Make a collection
+
+For development I suggest the [RESTClient](https://addons.mozilla.org/de/firefox/addon/9780) Firefox-Addon, which allows to send WebDav request and analyze the response.
 
 Hint
 ----
@@ -47,25 +77,6 @@ Acknowledge
 
 This extension uses the excellent [railsdav](http://github.com/stueccles/railsdav/tree/master)
 Rails plugin from Stuart Eccles.
-
-Dependencies
-------------
-
-This extension needs the following gems installed:
-
-* unicode
-* mime-types
-
-Todo
-----
-
-Some tasks sill needs to be done:
-
-* Copy a resource
-* Move a resource
-* Make a collection
-
-For development I suggest the [RESTClient](https://addons.mozilla.org/de/firefox/addon/9780) Firefox-Addo, which allows to send WebDav request and analyze the response.
 
 Authors
 -------
