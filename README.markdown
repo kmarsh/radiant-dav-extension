@@ -78,5 +78,5 @@ Some work has been kindly sponsored by [ScreenConcept](http://www.screenconcept.
 License
 -------
 
-This extension is released under the MIT license, see the [LICENSE](LICENSE) for more
+This extension is released under the MIT license, see the [LICENSE](master/LICENSE) for more
 information.
