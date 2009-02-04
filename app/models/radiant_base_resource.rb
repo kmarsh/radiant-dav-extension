@@ -192,6 +192,10 @@ class RadiantBaseResource
   #
   def prepare(user)
 
+    # Pages
+
+    @children << Radiant::RadiantPageResource.new('pages', Page.find_by_url('/'))
+    
     # Snippets
 
     @children << RadiantDirectoryResource.new('snippets') do
