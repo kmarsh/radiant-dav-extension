@@ -34,6 +34,13 @@ class Radiant::RadiantPageResource < RadiantDirectoryResource
     record.title
   end
 
+  #
+  # Remove the resource
+  #
+  def delete!
+    record.destroy
+  end
+
   private
 
     #

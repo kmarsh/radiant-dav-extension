@@ -52,6 +52,13 @@ class RadiantFileResource < RadiantBaseResource
   #
   def write!(content)
     record.content = content
-    record.save
+    record.save!
+  end
+
+  #
+  # Remove the resource
+  #
+  def delete!
+    record.destroy
   end
 end
