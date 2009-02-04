@@ -56,6 +56,14 @@ This extension needs the following gems installed:
 * unicode
 * mime-types
 
+Todo
+----
+
+Some tasks sill needs to be done:
+* Copy a resource
+* Move a resource
+* Make a collection
+
 Authors
 -------
 
