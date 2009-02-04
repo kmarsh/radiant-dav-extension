@@ -5,9 +5,6 @@ This extension allows you to access some Radiant content by pointing your WebDav
 client to `/admin/dav`. You'll have to authenticate yourself before access will
 be granted.
 
-**WARNING**: Extension is under heavy development is not working properly,
-please check back later...
-
 Privileges
 ----------
 
